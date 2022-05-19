@@ -22,6 +22,42 @@ select the word from the block. The rest of the type declaration is found in the
 
 •	The cache includes a valid bit and dirty bit per block
 
+
+## Components of testbench
+
+Therer are  following components:
+
+- Generator
+
+        Generates different input stimulus to be driven to DUT
+
+- Interface
+
+        Contains design signals that can be driven or monitored
+
+- Driver
+            
+        Drives the generated stimulus to the design
+
+- Monitor
+
+        Monitor the design input-output ports to capture design activity
+- Scoreboard
+
+        Checks output from the design with expected behavior
+- Environment
+
+        Contains all the verification components mentioned above
+- Test
+
+        	Contains the environment that can be tweaked with different configuration settings
+
+
+
+
+## TestBench Architecture:
+
+
 ## Processor to the cache signals 
 	1-bit Read or Write signal
 
@@ -47,6 +83,8 @@ select the word from the block. The rest of the type declaration is found in the
 	128-bit data from memory to cache
 
 	1-bit Ready signal, saying the memory operation is complete
+
+## Cache Structure: 
 
 ![cache_structure](https://user-images.githubusercontent.com/105862227/169352909-12ac2c86-3815-4c48-a42b-6fb282712a45.png)
 
