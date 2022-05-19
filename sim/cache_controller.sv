@@ -1,13 +1,20 @@
+//////////////////////////////////////////////////////////////////////////////////
+// Create Date: 20.05.2022
+// Project Name: Cache Controller
+// Tool Versions: Questa Sim -64 10.7c     
+// Revision 1.5.9 -
+//////////////////////////////////////////////////////////////////////////////////
 /*
-Specifications:
-	? Direct Mapped Cache
-	? Write-back scheme
-	? Block size = 4 words, Offset is 4 bits (block-offset=2 bits, byte-offset=2 bits)
-	? Cache size = 1024 blocks / Lines (Cache index is 10 bits)
-	? Block size is 4 words (16 bytes or 128 bits)
-	? 32-byte addresses [ tag=18 bits, Index=10 bits, Block offset=4 bits]
-	? The cache includes a valid bit and dirty bit per block
+Controller Specifications:
+	> Direct Mapped Cache
+	> Write-back scheme
+	> Block size = 4 words, Offset is 4 bits (block-offset=2 bits, byte-offset=2 bits)
+	> Cache size = 1024 blocks / Lines (Cache index is 10 bits)
+	> Block size is 4 words (16 bytes or 128 bits)
+	> 32-byte addresses [ tag=18 bits, Index=10 bits, Block offset=4 bits]
+	> The cache includes a valid bit and dirty bit per block	
 */
+
 module cache_controller (
 	clk,
 	rst_n,
