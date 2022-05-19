@@ -53,9 +53,9 @@ Therer are  following components:
         	Contains the environment that can be tweaked with different configuration settings
 
 
-
-
 ## TestBench Architecture:
+
+![sv_simple_tb_with_scb](https://user-images.githubusercontent.com/105862227/169370539-bb1f133c-dba9-4a73-8a83-1a025eca1c11.png)
 
 
 ## Processor to the cache signals 
