@@ -17,19 +17,19 @@ Controller Specifications:
 module cache_controller (
 	clk,
 	rst_n,
-	cpu_req_addr,  
+	cpu_req_addr,  //CPU signals
 	cpu_req_datain,
 	cpu_req_dataout,
 	cpu_req_rw,
 	cpu_req_valid,
-	cache_ready,   
-	mem_req_addr,  	
+	cache_ready,   //Cache ready
+	mem_req_addr,  //Main memory signals	
 	mem_req_datain,
 	mem_req_dataout,
 	mem_req_rw,
 	mem_req_valid,
 	mem_req_ready,
-        state_mode		
+        state_mode		//output
 );
 output int state_mode;
 //bit state_mode_YN;
@@ -198,10 +198,8 @@ case(present_state)
     next_cpu_req_rw_reg  = cpu_req_rw;
     next_cache_ready = 1'b0;  
     next_state = COMPARE_TAG;	
-    //$display (" - IDLE  ");
 	state_mode = 0;
-    
-    end
+       end
     else
     next_state = present_state;
   end
@@ -213,7 +211,6 @@ case(present_state)
     next_cpu_req_dataout = cache_read_data;
     next_state = IDLE;
 if (state_mode == 0) state_mode =1;
- 	//$display (" - Cache Hit   - COMPARE_TAG",);
     end
     else if (!cpu_req_rw_reg) //read miss
     begin
@@ -225,7 +222,6 @@ if (state_mode == 0) state_mode =1;
 	  next_mem_req_valid = 1'b1;
 	  next_state = ALLOCATE;
 if (state_mode == 0) state_mode =2;
-	//$display (" - Memory Read Clean - COMPARE_TAG",);
 	  end
 	  else 					  //dirty, write cache block to old memory address, then read this block with curr addr
 	  begin
@@ -235,7 +231,6 @@ if (state_mode == 0) state_mode =2;
 	  next_mem_req_valid = 1'b1;
 	  next_state = WRITE_BACK;
 if (state_mode == 0) state_mode =3;
-	//$display (" - Memory Read dirty - COMPARE_TAG");
 	  end
     end
     else //write operation
@@ -246,7 +241,6 @@ if (state_mode == 0) state_mode =3;
     write_datamem_cpu = 1'b1;
     next_state = IDLE;
 if (state_mode == 0) state_mode =4;
-//$display (" - Cache write - COMPARE_TAG");
 
   end
   end
@@ -254,7 +248,6 @@ if (state_mode == 0) state_mode =4;
   ALLOCATE:
   begin
   next_mem_req_valid = 1'b0;
-  //$display (" - Cache - ALLOCATE");
   next_cache_ready = 1'b0;  
 	if(!mem_req_valid && mem_req_ready)	//wait for memory to be ready with read data
 	begin
@@ -275,7 +268,6 @@ if (state_mode == 0) state_mode =4;
   begin
   next_cache_ready = 1'b0;  
   next_mem_req_valid = 1'b0;
-  //$display (" - Cache - WRITE_BACK");
 	if(!mem_req_valid && mem_req_ready)  //write is done, now read
 	begin
 	valid_bit = 1'b1;
@@ -295,6 +287,7 @@ if (state_mode == 0) state_mode =4;
 endcase
 end
 endmodule
+
 
 
 
