@@ -14,6 +14,7 @@ Controller Specifications:
 	> 32-byte addresses [ tag=18 bits, Index=10 bits, Block offset=4 bits]
 	> The cache includes a valid bit and dirty bit per block	
 */
+
 module cache_controller (
 	clk,
 	rst_n,
@@ -62,7 +63,7 @@ output cache_ready;
 
 //Cache consists of tag memory and data memory
 //Tag memory = valid bit + dirty bit + tag
-reg [23:0] tag_mem [0:1023];
+reg [19:0] tag_mem [0:1023];
 //reg [23:0] tag_mem [1023:0];
 //Data memory holds the actual data in cache
 reg [127:0] data_mem [0:1023];
@@ -114,7 +115,7 @@ $readmemh("initial_tag_memory.mem", tag_mem);	//load initial values for tag memo
 #9999
 fd_w = $fopen ("Result-Cache_memory.mem", "w"); 	// Open a new file in write mode and store file descriptor in fd_w
 for (int i = 0; i < $size(tag_mem); i++)
-	$fwrite (fd_w,"%4d(%3h)  (%20b)   %32h\n",i,i ,tag_mem[i] , data_mem[i]);
+	$fwrite (fd_w,"%4d(%3h)  %20b %32h\n",i,i ,tag_mem[i] , data_mem[i]);
 #10 $fclose(fd_w);
 
 
@@ -145,7 +146,7 @@ begin
   end
   else
   begin
-    	tag_mem[cpu_addr_index]  <= tagmem_enable ? {4'b0,valid_bit,dirty_bit,cpu_addr_tag} : tag_mem[cpu_addr_index];
+    	tag_mem[cpu_addr_index]  <= tagmem_enable ? {valid_bit,dirty_bit,cpu_addr_tag} : tag_mem[cpu_addr_index];
    	data_mem[cpu_addr_index] <= write_datamem_mem ? mem_req_datain : write_datamem_cpu ? cpu_req_datain_reg : data_mem[cpu_addr_index];
 	
 	present_state   	<= next_state;
@@ -287,7 +288,6 @@ if (state_mode == 0) state_mode =4;
 endcase
 end
 endmodule
-
 
 
 
